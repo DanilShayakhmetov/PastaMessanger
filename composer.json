@@ -1,0 +1,7 @@
+{
+    "require": {
+        "cboden/ratchet": "^0.4.1",
+        "doctrine/orm": "^2.5",
+        "symfony/routing": "^3.4"
+    }
+}
