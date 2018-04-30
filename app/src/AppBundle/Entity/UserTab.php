@@ -1,6 +1,9 @@
 <?php
 namespace AppBundle\Entity;
-
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinColumn;//Это нужно
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -49,7 +52,44 @@ private $password;
 
 // другие свойства и методы
 
-public function getEmail()
+/*
+ * Foregin keys for
+ *
+ * User Message OneToMany
+ * and
+ * User Chat ManyToMany
+ */
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="MessageTab", mappedBy="MessageUser")
+     */
+        private $UserMessage;
+
+
+    /**
+     * @ManyToMany(targetEntity="ChatTab")
+     */
+
+        private $UserChat;
+
+
+
+    public function __construct()
+    {
+        $this->UserMessage = new ArrayCollection();
+        $this->UserChat = new ArrayCollection();
+    }
+
+
+    public function getMessage()
+    {
+        return $this->UserMessage;
+    }
+
+
+    public function getEmail()
 {
 return $this->email;
 }
@@ -91,7 +131,7 @@ $this->password = $password;
 
 public function getSalt()
 {
-// Алгоритм bcrypt не требует отдельной "соли".
+// Алгоритм  не требует отдельной "соли".
 // Вам *может* понадобиться настоящая соль, если вы выберете другой кодер.
 return null;
 }

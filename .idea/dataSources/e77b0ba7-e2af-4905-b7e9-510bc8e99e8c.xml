@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="PostgreSQL - postgres@loalhost">
+<dataSource name="postgres@localhost">
   <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.8">
     <root id="1">
       <ServerVersion>9.6.8</ServerVersion>
@@ -27,7 +27,7 @@
     </role>
     <schema id="5" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2018-04-25.22:46:12.895</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2018-04-30.23:33:35.304</IntrospectionTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
