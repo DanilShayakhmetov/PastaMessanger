@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\ORM\EntityManagerInterface;
+
 class RegistrationController extends Controller
 {
     /**
@@ -23,7 +24,7 @@ class RegistrationController extends Controller
     public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
     {
         // 1) Постройте форму
-        $user = new UserTab();
+        $user = new UserTab;
         $form = $this->createForm(UserType::class, $user);
 
         // 2) Обработайте отправку (случится только с POST)

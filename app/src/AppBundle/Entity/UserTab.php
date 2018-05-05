@@ -1,78 +1,108 @@
 <?php
+
 namespace AppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\JoinColumn;//Это нужно
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as JMSSerializer;
+
 
 /**
-* @ORM\Entity
-* @UniqueEntity(fields="email", message="Email already taken")
-* @UniqueEntity(fields="username", message="Username already taken")
-*/
+ * UserTab
+ *
+ * @ORM\Table(name="user_tab")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserTabRepository")
+ */
 class UserTab
 {
-/**
-* @ORM\Id
-* @ORM\Column(type="integer")
-* @ORM\GeneratedValue(strategy="AUTO")
-*/
-private $id;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-/**
-* @ORM\Column(type="string", length=255, unique=true)
-* @Assert\NotBlank()
-* @Assert\Email()
-*/
-private $email;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=55, unique=true)
+     */
+    private $username;
 
-/**
-* @ORM\Column(type="string", length=255, unique=true)
-* @Assert\NotBlank()
-*/
-private $username;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     */
+    private $email;
 
-/**
-* @Assert\NotBlank()
-* @Assert\Length(max=4096)
-*/
-private $plainPassword;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="firstName", type="string", length=255)
+     */
+    private $firstName;
 
-/**
-* Длина ниже зависит от "алгоритма", используемого для шифрования
-* пароля, но это также хорошо работает с bcrypt.
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastName", type="string", length=255)
+     */
+    private $lastName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="plainPassword", type="string", length=255)
+     */
+    private $plainPassword;
+
+    /**
+     * @var \DateTime
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="postedAt", type="datetime", nullable=true)
+     */
+    private $postedAt;
+
+
+    /*
+* Foregin keys for
 *
-* @ORM\Column(type="string", length=64)
+* User Message OneToMany
+* and
+* User Chat ManyToMany
 */
-private $password;
-
-// другие свойства и методы
-
-/*
- * Foregin keys for
- *
- * User Message OneToMany
- * and
- * User Chat ManyToMany
- */
 
 
 
     /**
      * @ORM\OneToMany(targetEntity="MessageTab", mappedBy="MessageUser")
      */
-        private $UserMessage;
+    private $UserMessage;
 
 
     /**
      * @ManyToMany(targetEntity="ChatTab")
      */
 
-        private $UserChat;
+    private $UserChat;
 
 
 
@@ -83,58 +113,183 @@ private $password;
     }
 
 
-    public function getMessage()
+
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
     {
-        return $this->UserMessage;
+        return $this->id;
     }
 
+    /**
+     * Set username.
+     *
+     * @param string $username
+     *
+     * @return UserTab
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
 
+        return $this;
+    }
+
+    /**
+     * Get username.
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set email.
+     *
+     * @param string $email
+     *
+     * @return UserTab
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email.
+     *
+     * @return string
+     */
     public function getEmail()
-{
-return $this->email;
-}
+    {
+        return $this->email;
+    }
 
-public function setEmail($email)
-{
-$this->email = $email;
-}
+    /**
+     * Set firstName.
+     *
+     * @param string $firstName
+     *
+     * @return UserTab
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
 
-public function getUsername()
-{
-return $this->username;
-}
+        return $this;
+    }
 
-public function setUsername($username)
-{
-$this->username = $username;
-}
+    /**
+     * Get firstName.
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
 
-public function getPlainPassword()
-{
-return $this->plainPassword;
-}
+    /**
+     * Set lastName.
+     *
+     * @param string $lastName
+     *
+     * @return UserTab
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
 
-public function setPlainPassword($password)
-{
-$this->plainPassword = $password;
-}
+        return $this;
+    }
 
-public function getPassword()
-{
-return $this->password;
-}
+    /**
+     * Get lastName.
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
 
-public function setPassword($password)
-{
-$this->password = $password;
-}
+    /**
+     * Set password.
+     *
+     * @param string $password
+     *
+     * @return UserTab
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
 
-public function getSalt()
-{
-// Алгоритм  не требует отдельной "соли".
-// Вам *может* понадобиться настоящая соль, если вы выберете другой кодер.
-return null;
-}
+        return $this;
+    }
 
-// другие методы, включая методы безопасности как getRoles()
+    /**
+     * Get password.
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set plainPassword.
+     *
+     * @param string $plainPassword
+     *
+     * @return UserTab
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get plainPassword.
+     *
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Set postedAt.
+     *
+     * @param \DateTime $postedAt
+     *
+     * @return UserTab
+     */
+    public function setPostedAt($postedAt)
+    {
+        $this->postedAt = $postedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get postedAt.
+     *
+     * @return \DateTime
+     */
+    public function getPostedAt()
+    {
+        return $this->postedAt;
+    }
 }
