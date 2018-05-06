@@ -1,10 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: dev
- * Date: 24.04.18
- * Time: 23:08
- */
+// * Created by PhpStorm.
+// * User: dev
+// * Date: 24.04.18
+// * Time: 23:08
+// */
 
 namespace AppBundle\Controller;
 
@@ -55,7 +55,7 @@ class UserController extends FOSRestController
         $lastname = $request->get('lastName');
         $password = $request->get('password');
         $plainPassword = $request->get('plainPassword');
-        $postedAt = $request->get('postedAt');
+
         if(empty($username) || empty($email))
         {
             return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
@@ -66,7 +66,6 @@ class UserController extends FOSRestController
         $data->setLastName($lastname);
         $data->setPassword($password);
         $data->setPlainPassword($plainPassword);
-        $data->setPostedAt($postedAt);
         $em = $this->getDoctrine()->getManager();
         $em->persist($data);
         $em->flush();
@@ -113,6 +112,14 @@ class UserController extends FOSRestController
 
 
 
+    public function indexAction()
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
+
+        return new Response('Well hi there '.$user->getFirstName());
+    }
 
 
 }
