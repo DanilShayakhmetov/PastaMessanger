@@ -92,7 +92,10 @@ class ChatTab
     }
 
 
-
+    public function removeChat(UserTab $user)
+    {
+        $this->ChatUser->removeElement($user);
+    }
 
 
 

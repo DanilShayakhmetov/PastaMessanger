@@ -30,7 +30,7 @@ class ChatController extends FOSRestController
     {
         $restresult = $this->getDoctrine()->getRepository('AppBundle:ChatTab')->findAll();
         if ($restresult === null) {
-            return new View("there are no users exist", Response::HTTP_NOT_FOUND);
+            return new View("there are no chat exist", Response::HTTP_NOT_FOUND);
         }
         return $restresult;
     }
@@ -68,24 +68,24 @@ class ChatController extends FOSRestController
     }
 
 //   Chat by current autenticated user Name
-    /**
-     * @Rest\Get("/api/chatbyUsrName")
-     */
-    public function userNameAction()
-
-    {
-
-
-        $user = $this->getUser()->getUsername();
-        $restresult = $this->getDoctrine()->getRepository('AppBundle:UserTab')->findOneBy(array('username'=>$user));
-        $chat = $restresult->getUserChat();
-
-        if ($restresult === null) {
-            return new View($chat."  hello ", Response::HTTP_NOT_FOUND);
-        }
-        return $chat;
-    }
-
+//    /**
+//     * @Rest\Get("/api/chatbyUsrName")
+//     */
+//    public function userNameAction()
+//
+//    {
+//
+//
+//        $user = $this->getUser()->getUsername();
+//        $restresult = $this->getDoctrine()->getRepository('AppBundle:UserTab')->findOneBy(array('username'=>$user));
+//        $chat = $restresult->getUserChat();
+//
+//        if ($restresult === null) {
+//            return new View($chat."  hello ", Response::HTTP_NOT_FOUND);
+//        }
+//        return $chat;
+//    }
+//
 
 
 
@@ -120,7 +120,33 @@ class ChatController extends FOSRestController
 
 
 
+    /**
+     * @Rest\Delete("/api/deleteChat/{id}")
+     */
+    public function deleteAction($id,EntityManagerInterface $em)
+    {
+//        $user = $this->getUser()->getId();
+//
+        $user = new UserTab();
+//
+        $user = $em->getRepository('AppBundle:UserTab')->findOneBy(['email' => 'a@mail.com']);
+        $em = $this->getDoctrine()->getManager();
 
+//        $user = $this->getUser()->getId();
+        $restresult = $this->getDoctrine()->getRepository('AppBundle:UserTab')->find($user);
+        $chat = $restresult->removeChat($user);
+
+
+
+        if (empty($chat)) {
+            return new View("user not found", Response::HTTP_NOT_FOUND);
+        }
+        else {
+            $em->persist($chat);
+            $em->flush();
+        }
+        return new View("Chat deleted successfully", Response::HTTP_OK);
+    }
 
 
 
