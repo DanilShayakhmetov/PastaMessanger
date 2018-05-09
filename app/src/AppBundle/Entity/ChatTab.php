@@ -25,16 +25,17 @@ class ChatTab
     private $id;
 
     /**
-     * @var bool
+     * @var string
      *
-     * @ORM\Column(name="is_group", type="boolean")
+     * @ORM\Column(name="is_group", type="string")
      */
     private $isGroup;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="posted_at", type="datetime")
+     *
+     * @ORM\Column(name="posted_at", type="string", nullable=true)
      */
     private $postedAt;
 
@@ -52,11 +53,47 @@ class ChatTab
 
     private $ChatMessage;
 
+    /**
+     * @param mixed $ChatMessage
+     */
+    public function setChatMessage($ChatMessage)
+    {
+        $this->ChatMessage = $ChatMessage;
+    }
 
     /**
-    * @ManyToMany(targetEntity="UserTab")
-    */
+     * @return mixed
+     */
+    public function getChatMessage()
+    {
+        return $this->ChatMessage;
+    }
+
+
+
+    /**
+    * @ORM\ManyToMany(targetEntity="UserTab", inversedBy="UserChat")
+     *@ORM\JoinTable(name="Chat_User")
+     */
+
     private $ChatUser;
+
+    public function addUserToChat(UserTab $user)
+    {
+        $this->ChatUser[] = $user;
+    }
+
+    /**
+     * @return ArrayCollection|UserTab[]
+     */
+    public function getChatUser()
+    {
+        return $this->ChatUser;
+    }
+
+
+
+
 
 
     public function __construct()

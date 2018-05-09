@@ -52,10 +52,26 @@ class MessageTab
     private $MessageUser;
 
     /**
+     * @return mixed
+     */
+    public function getMessageUser()
+    {
+        return $this->MessageUser;
+    }
+
+    /**
      * @ORM\ManyToOne(targetEntity="ChatTab", inversedBy="ChatMessage")
      * @ORM\JoinColumn(nullable=false)
      */
     private $MessageChat;
+
+    /**
+     * @return mixed
+     */
+    public function getMessageChat()
+    {
+        return $this->MessageChat;
+    }
 
 
 

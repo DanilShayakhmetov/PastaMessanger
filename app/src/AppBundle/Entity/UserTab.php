@@ -41,14 +41,14 @@ class UserTab extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255)
+     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
      */
     protected $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=255)
+     * @ORM\Column(name="lastName", type="string", length=255, nullable=true)
      */
     protected $lastName;
 //
@@ -108,14 +108,41 @@ class UserTab extends BaseUser
      */
     private $UserMessage;
 
+    /**
+     * @return mixed
+     */
+    public function getUserMessage()
+    {
+        return $this->UserMessage;
+    }
+
 
     /**
-     * @ManyToMany(targetEntity="ChatTab")
+     * @ORM\ManyToMany(targetEntity="ChatTab",mappedBy="ChatUser")
+     *  @ORM\JoinTable(name="User_Chat")
      */
 
     private $UserChat;
 
 
+
+    public function createUserChat(ChatTab $chat)
+    {
+        $this->UserChat[] = $chat;
+    }
+
+
+
+//    NEW
+    /**
+     * @return mixed
+     */
+    public function getUserChat()
+    {
+        return $this->UserChat;
+    }
+
+//
 
     public function __construct()
     {
