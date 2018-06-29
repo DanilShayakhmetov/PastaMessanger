@@ -1,1 +1,6 @@
-<h1>The Genus {{ name }}</h1>
+{{ form_start(form) }}
+    {{ form_row(form.is_group) }}
+    {{ form_row(form.posted_at) }}
+
+<button type="submit">send!</button>
+{{ form_end(form) }}

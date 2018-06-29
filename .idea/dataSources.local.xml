@@ -9,5 +9,14 @@
       <user-name>postgres</user-name>
       <introspection-schemas>postgres:</introspection-schemas>
     </data-source>
+    <data-source name="postgres@localhost" uuid="e77b0ba7-e2af-4905-b7e9-510bc8e99e8c">
+      <database-info product="PostgreSQL" version="9.6.8" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>postgres</user-name>
+      <introspection-schemas>postgres:public</introspection-schemas>
+    </data-source>
   </component>
 </project>

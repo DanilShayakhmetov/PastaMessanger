@@ -8,8 +8,7 @@ sudo pip3 install docker-compose
 docker pull composer
 docker pull php
 docker pull nginx
-docker run -d -v $(pwd):/chat composer install
-docker run -d -v $(pwd):/chat composer require cboden/ratchet
 sudo docker-compose up -d
-composer require cboden/ratchet
+
+
 
